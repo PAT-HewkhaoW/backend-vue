@@ -27,7 +27,10 @@ export default {
 <template>
   <div class="post-item-main">
     <div class="post-info-container">
-      <div class="user-info"></div>
+      <div class="user-info">post</div>
+    </div>
+    <div class="post-content-container">
+      <p>{{ this.post_content }}</p>
     </div>
   </div>
 </template>

@@ -37,12 +37,23 @@ export default {
 <template>
   <div class="nav-main">
     <div class="nav-container">
-      <div class="brand-nav">
+      <div class="left-nav">
         <IconLogo />
       </div>
       <div class="middle-nav"></div>
       <div class="right-nav">
-        <HamburgerBTN v-if="ismobile" @click="handleMenuToggle" />
+        <div class="nav-hamburger">
+          <HamburgerBTN v-if="ismobile" @click="handleMenuToggle" />
+        </div>
+        <div class="desktop-right-nav">
+          <div class="notification-container">this is notification</div>
+          <div class="user-container">
+            <div class="user-profile">
+              <span></span>
+            </div>
+          </div>
+          <router-link :to="{ name: 'user-signin' }">sign in</router-link>
+        </div>
       </div>
     </div>
     <div class="nav-menu" :class="{ hidden: !menuToggled }">
@@ -77,6 +88,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: white;
 
   .nav-container {
     background-color: var(--vt-c-black);
@@ -91,21 +103,37 @@ export default {
       margin: auto;
     }
 
-    .brand-nav {
+    .left-nav {
     }
 
     .middle-nav {
-      ul {
-        display: flex;
-        li {
-        }
-      }
     }
 
     .right-nav {
-      padding-right: 12px;
       display: flex;
       align-items: center;
+
+      .desktop-right-nav {
+        display: flex;
+        gap: 24px;
+
+        .user-container {
+          .user-profile {
+            span {
+              display: block;
+              width: 30px;
+              height: 30px;
+            }
+          }
+        }
+      }
+      .nav-hamburger {
+        display: none;
+        @include for-mobile {
+          display: block;
+          padding-right: 12px;
+        }
+      }
     }
   }
 
