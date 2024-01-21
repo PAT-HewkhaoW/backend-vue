@@ -1,5 +1,8 @@
 <script>
 import axios from "axios";
+
+import Password from "primevue/password";
+import Toast from "primevue/toast";
 export default {
   data() {
     return {
@@ -8,6 +11,10 @@ export default {
     };
   },
 
+  components: {
+    Password,
+    Toast,
+  },
   methods: {
     async handleSubmit(e) {
       const response = await axios.post("login", {
@@ -25,40 +32,32 @@ export default {
 <template>
   <div class="signin-main">
     <!-- Sign Up section -->
-    <div class="left-signin"></div>
-    <div class="right-signin">
+
+    <div class="signin-card">
       <div class="signup-section">
         <p class="title">Already have an account?</p>
         <div class="signup-link">
-          <router-link :to="{ name: 'user-signin' }">Sign Up </router-link>
+          <router-link :to="{ name: 'user-signup' }">Sign Up </router-link>
         </div>
       </div>
       <div class="signin-form">
-        <div class="title">
-          <h1>Sign In</h1>
+        <div class="card flex justify-content-center">
+          <form @submit="onSubmit" class="flex flex-column gap-2">
+            <label for="value">Password</label>
+            <Password
+              id="value"
+              v-model="value"
+              type="text"
+              :class="{ 'p-invalid': errorMessage }"
+              aria-describedby="text-error"
+            />
+            <small class="p-error" id="text-error">{{
+              errorMessage || "&nbsp;"
+            }}</small>
+            <Button type="submit" label="Submit" />
+          </form>
+          <Toast />
         </div>
-        <form action="" method="post" @submit.prevent="handleSubmit">
-          <div class="form-group">
-            <label for="username"> email </label>
-            <input
-              type="email"
-              class="form-control"
-              v-model="email"
-              placeholder="email"
-            />
-          </div>
-          <div class="form-group">
-            <label for="username"> password </label>
-            <input
-              type="password"
-              class="form-control"
-              v-model="password"
-              placeholder="password"
-            />
-          </div>
-
-          <button class="btn" type="submit">sign in</button>
-        </form>
       </div>
     </div>
   </div>
@@ -70,21 +69,18 @@ export default {
   width: 100vw;
   height: 100vh;
 
+  padding: 24px;
   display: flex;
+  justify-content: center;
   flex-direction: row;
 
   font-family: satoshi regular;
-
-  .left-signin {
-    flex-basis: 40%;
-    display: block;
-    background-color: aquamarine;
-  }
-
-  .right-signin {
-    flex-basis: 60%;
+  .signin-card {
+    background-color: var(--color-background-mute);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
     padding: 30px 42px;
-    height: 100%;
     .signup-section {
       display: flex;
       justify-content: flex-end;
@@ -96,61 +92,8 @@ export default {
         }
       }
     }
+
     .signin-form {
-      display: flex;
-      flex-direction: column;
-      height: 70%;
-      justify-content: space-evenly;
-
-      margin: 0 auto;
-
-      @include for-desktop {
-        max-width: 600px;
-      }
-
-      transition: 0.5s ease all;
-
-      .title {
-        font-family: satoshibold;
-        font-weight: bold;
-      }
-
-      form {
-        display: flex;
-        flex-direction: column;
-
-        gap: 18px;
-
-        max-width: 100%;
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          label {
-            font-weight: 700;
-          }
-
-          .form-control {
-            padding: 12px 16px;
-            border: 1px solid var(--vt-c-divider-dark-2);
-            border-radius: 6px;
-
-            &:focus {
-              border-color: blue;
-            }
-          }
-        }
-
-        .btn {
-          margin-top: 70px;
-          max-width: fit-content;
-          text-transform: uppercase;
-          padding: 12px 36px;
-          margin-left: auto;
-
-          border: 0;
-          border-radius: 999px;
-        }
-      }
     }
   }
 }

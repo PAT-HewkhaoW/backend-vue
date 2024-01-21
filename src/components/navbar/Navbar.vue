@@ -3,7 +3,7 @@
 <script>
 import Navitem from "./NavItem.vue";
 import HamburgerBTN from "./HamburgerBTN.vue";
-import IconLogo from "../icons/IconLogo.vue";
+import IconBrand from "../icons/IconBrand.vue";
 export default {
   props: {},
 
@@ -14,7 +14,7 @@ export default {
     };
   },
 
-  components: { Navitem, HamburgerBTN, IconLogo },
+  components: { Navitem, HamburgerBTN, IconBrand },
 
   mounted() {
     window.addEventListener("resize", this.handleResize);
@@ -38,7 +38,7 @@ export default {
   <div class="nav-main">
     <div class="nav-container">
       <div class="left-nav">
-        <IconLogo />
+        <IconBrand color="var(--vt-c-black)" />
       </div>
       <div class="middle-nav"></div>
       <div class="right-nav">
@@ -46,13 +46,26 @@ export default {
           <HamburgerBTN v-if="ismobile" @click="handleMenuToggle" />
         </div>
         <div class="desktop-right-nav">
-          <div class="notification-container">this is notification</div>
+          <div class="notification-container">
+            <font-awesome-icon :icon="['fas', 'bell']" style="color: black" />
+          </div>
           <div class="user-container">
             <div class="user-profile">
               <span></span>
             </div>
+
+            <div class="auth-container">
+              <div class="link-nav primary">
+                <router-link :to="{ name: 'user-signin' }">sign in</router-link>
+                <span></span>
+              </div>
+
+              <div class="link-nav secondary">
+                <router-link :to="{ name: 'user-signup' }">sign up</router-link>
+                <span></span>
+              </div>
+            </div>
           </div>
-          <router-link :to="{ name: 'user-signin' }">sign in</router-link>
         </div>
       </div>
     </div>
@@ -91,10 +104,9 @@ export default {
   color: white;
 
   .nav-container {
-    background-color: var(--vt-c-black);
     max-width: 1920px;
     width: 100%;
-    padding: 24px 36px;
+    padding: 16px 36px;
     max-width: var(1920px);
     display: flex;
     justify-content: space-between;
@@ -116,19 +128,79 @@ export default {
       .desktop-right-nav {
         display: flex;
         gap: 24px;
+        align-items: center;
 
+        .notification-container {
+          svg {
+            height: 24px;
+            width: auto;
+          }
+        }
         .user-container {
+          display: flex;
+          align-items: center;
+          gap: 24px;
           .user-profile {
             span {
               display: block;
-              width: 30px;
-              height: 30px;
+              width: 36px;
+              height: 36px;
+              border-radius: 9999px;
+              background-color: cadetblue;
+            }
+          }
+        }
+        .auth-container {
+          display: flex;
+          gap: 32px;
+          .link-nav {
+            position: relative;
+            padding: 4px 0;
+
+            &.primary {
+              a {
+                color: var(--color-heading);
+              }
+            }
+
+            &.secondary {
+              a {
+                color: var(--color-text);
+              }
+            }
+            a {
+              font-size: large;
+              color: var(--vt-c-white);
+              text-transform: capitalize;
+              transition: width 0.3s ease;
+              font-family: Inconsolata 500;
+            }
+            span {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 0;
+              height: 2px;
+              background-color: var(--color-accent);
+              transition: width 0.3s ease;
+              &::after {
+              }
+            }
+
+            &:hover {
+              a {
+                color: var(--color-accent);
+              }
+              span {
+                width: 100%;
+              }
             }
           }
         }
       }
       .nav-hamburger {
         display: none;
+
         @include for-mobile {
           display: block;
           padding-right: 12px;
@@ -145,12 +217,10 @@ export default {
     flex-direction: column;
     justify-content: center;
     transition: 0.3s ease-in-out;
+    position: absolute;
+    margin-top: 80px;
+    top: 0;
 
-    &::before {
-      position: absolute;
-      margin-top: 80px;
-      top: 0;
-    }
     .menu-item {
       text-align: center;
 
@@ -159,6 +229,10 @@ export default {
         text-decoration: none;
         color: #000;
       }
+    }
+
+    @media (min-width: 577px) {
+      transform: translateY(calc(-100% - 80px));
     }
   }
 }

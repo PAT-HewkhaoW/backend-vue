@@ -56,7 +56,7 @@ export default {
     width: 24px;
     height: 2px;
 
-    background-color: white;
+    background-color: var(--vt-c-black);
     border-radius: 9999px;
 
     transition: all 0.3s ease-in-out;

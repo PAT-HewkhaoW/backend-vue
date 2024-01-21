@@ -69,7 +69,7 @@ export default {
       color: white;
 
       a {
-        color: red;
+        color: var(--color-accent);
       }
     }
   }
@@ -79,6 +79,9 @@ export default {
       padding: 10px 18px;
       border: 0;
       border-radius: 6px;
+      &:hover {
+        background-color: var(--color-accent);
+      }
     }
   }
 }
